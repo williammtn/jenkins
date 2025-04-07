@@ -39,14 +39,13 @@ pipeline {
 
     stage('Build Docker Image') {
       agent {
-        docker {
+        dockerContainer {
           image 'docker:stable'
-          args '-v /var/run/docker.sock:/var/run/docker.sock'
-          reuseNode true
+          dockerHost 'unix:///var/run/docker.sock'
         }
       }
       steps {
-        sh 'docker build -t spring-poc-image .'
+        sh 'docker build -t ${DOCKER_IMAGE} .'
       }
     }
 
