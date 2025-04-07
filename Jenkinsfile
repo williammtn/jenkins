@@ -37,17 +37,17 @@ pipeline {
       }
     }
 
-    stage('Build Docker Image') {
-      agent {
-        dockerContainer {
-          image 'docker:stable'
-          dockerHost 'unix:///var/run/docker.sock'
-        }
-      }
-      steps {
-        sh 'docker build -t ${DOCKER_IMAGE} .'
-      }
-    }
+    // stage('Build Docker Image') {
+    //   agent {
+    //     dockerContainer {
+    //       image 'docker:stable'
+    //       dockerHost 'unix:///var/run/docker.sock'
+    //     }
+    //   }
+    //   steps {
+    //     sh 'docker build -t ${DOCKER_IMAGE} .'
+    //   }
+    // }
 
     stage('Déploiement sur Azure') {
       steps {
