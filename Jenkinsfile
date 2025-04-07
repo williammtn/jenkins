@@ -38,11 +38,15 @@ pipeline {
     }
 
     stage('Build Docker Image') {
-      steps {
-         script {
-            def appImage = docker.build("${DOCKER_IMAGE}")
-            echo "Image construite: ${appImage.id}"
+      agent {
+        docker {
+          image 'docker:stable'
+          args '-v /var/run/docker.sock:/var/run/docker.sock'
+          reuseNode true
         }
+      }
+      steps {
+        sh 'docker build -t spring-poc-image .'
       }
     }
 
