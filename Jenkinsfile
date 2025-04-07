@@ -40,7 +40,8 @@ pipeline {
     stage('Build Docker Image') {
       steps {
         // Construit l’image Docker à partir du Dockerfile à la racine du projet
-        sh "docker build -t ${DOCKER_IMAGE} ."
+        def appImage = docker.build("${DOCKER_IMAGE}")
+        echo "Image construite: ${appImage.id}"
       }
     }
 
