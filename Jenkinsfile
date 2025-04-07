@@ -25,7 +25,7 @@ pipeline {
         // Exécute l'analyse SonarQube en utilisant Maven
         // Assurez-vous d’avoir un fichier pom.xml correctement configuré
         withSonarQubeEnv("${SONARQUBE}") {
-          sh "mvn clean verify sonar:sonar -Dsonar.projectKey=poc -Dsonar.projectName='poc'"
+          sh "mvn clean verify sonar:sonar -Dsonar.projectKey=poc -Dsonar.projectName=poc -Dsonar.login=sqa_761d86a22f48fe2c9825513ca3d778c7eb28d7b6"
         }
       }
     }
