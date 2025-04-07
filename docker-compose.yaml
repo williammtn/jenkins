@@ -7,8 +7,8 @@ services:
     networks:
       - jenkins-sonarqube-net
     volumes:
-      - spring-app-data:/app/data # Exemple de volume pour les données de l'application
-      - spring-app-logs:/app/logs # Exemple de volume pour les logs
+      - spring-jenkins-app-data:/app/data
+      - spring-jenkins-app-logs:/app/logs
 
   jenkins:
     image: jenkins/jenkins
@@ -17,7 +17,7 @@ services:
       - "8080:8080"
       - "50000:50000"
     volumes:
-      - tpjenkins_bfc25d9cc3a823ee87f1d0cc007037922c118e043203dd219402ef05c3b6558d:/var/jenkins_home
+      - jenkins:/var/jenkins_home
     networks:
       - jenkins-sonarqube-net
     privileged: true
@@ -29,14 +29,14 @@ services:
 
   sonarqube:
     image: sonarqube:latest
-    container_name: sonarqube
+    container_name: sonarqube-jenkins
     ports:
       - "9000:9000"
     volumes:
-      - sonarqube_new_data:/opt/sonarqube/data
-      - sonarqube_new_logs:/opt/sonarqube/logs
-      - sonarqube_new_extensions:/opt/sonarqube/extensions
-      - sonarqube_new_temp:/opt/sonarqube/temp
+      - sonarqube_jenkins_data:/opt/sonarqube/data
+      - sonarqube_jenkins_logs:/opt/sonarqube/logs
+      - sonarqube_jenkins_extensions:/opt/sonarqube/extensions
+      - sonarqube_jenkins_temp:/opt/sonarqube/temp
     networks:
       - jenkins-sonarqube-net
     deploy:
@@ -45,44 +45,14 @@ services:
           cpus: '0.5'
           memory: 1G
 
-  prometheus:
-    image: prom/prometheus
-    container_name: prometheus
-    ports:
-      - "9090:9090"
-    volumes:
-      - /c/Users/will2/Desktop/CESI/DevCloudNatif/tpjenkins/tpjenkins/prometheus.yml:/etc/prometheus/prometheus.yml
-      - prometheus-data:/prometheus/data # Volume pour les données de Prometheus
-    networks:
-      - jenkins-sonarqube-net
-    deploy:
-      resources:
-        limits:
-          cpus: '0.5'
-          memory: 256M
-
-  grafana:
-    image: grafana/grafana-enterprise
-    container_name: grafana
-    restart: unless-stopped
-    networks:
-      - jenkins-sonarqube-net
-    ports:
-     - '3000:3000'
-    volumes:
-      - grafana-data:/var/lib/grafana # Volume pour les données de Grafana
-
 volumes:
-  tpjenkins_bfc25d9cc3a823ee87f1d0cc007037922c118e043203dd219402ef05c3b6558d:
-    external: true
-  sonarqube_new_data:
-  sonarqube_new_logs:
-  sonarqube_new_extensions:
-  sonarqube_new_temp:
-  spring-app-data: # Volume pour les données de l'application Spring Boot
-  spring-app-logs: # Volume pour les logs de l'application Spring Boot
-  prometheus-data: # Volume pour les données de Prometheus
-  grafana-data: # Volume pour les données de Grafana
+  jenkins:
+  sonarqube_jenkins_data:
+  sonarqube_jenkins_logs:
+  sonarqube_jenkins_extensions:
+  sonarqube_jenkins_temp:
+  spring-jenkins-app-data: # Volume pour les données de l'application Spring Boot
+  spring-jenkins-app-logs: # Volume pour les logs de l'application Spring Boot
 
 networks:
   jenkins-sonarqube-net:
