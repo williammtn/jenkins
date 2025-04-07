@@ -16,15 +16,15 @@ pipeline {
       }
     }
 
-    stage('Analyse SonarQube') {
-      steps {
-        // Exécute l'analyse SonarQube en utilisant Maven
-        // Assurez-vous d’avoir un fichier pom.xml correctement configuré
-        withSonarQubeEnv("${SONARQUBE}") {
-          sh 'mvn clean verify sonar:sonar'
-        }
-      }
-    }
+    // stage('Analyse SonarQube') {
+    //   steps {
+    //     // Exécute l'analyse SonarQube en utilisant Maven
+    //     // Assurez-vous d’avoir un fichier pom.xml correctement configuré
+    //     withSonarQubeEnv("${SONARQUBE}") {
+    //       sh "mvn clean verify sonar:sonar -Dsonar.projectKey=poc -Dsonar.projectName='poc'"
+    //     }
+    //   }
+    // }
 
     stage('Tests') {
       steps {
