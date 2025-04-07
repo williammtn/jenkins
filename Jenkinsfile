@@ -12,7 +12,7 @@ pipeline {
     stage('Checkout') {
       steps {
         // Clonage du dépôt GitHub
-        git url: 'https://github.com/votre-utilisateur/votre-depot.git', branch: 'master'
+        git url: 'https://github.com/williammtn/jenkins.git', branch: 'master'
       }
     }
 
