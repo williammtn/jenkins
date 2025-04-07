@@ -1,6 +1,10 @@
 pipeline {
   agent any
 
+  tools {
+    maven 'maven'
+  }
+
   environment {
     // Nom de l'installation SonarQube dans Jenkins
     SONARQUBE = 'sonarqube'
