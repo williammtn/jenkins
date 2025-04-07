@@ -46,6 +46,19 @@ services:
           cpus: '0.5'
           memory: 1G
 
+  db:
+    image: postgres:15
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: breizhsport
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+
 volumes:
   jenkins:
   sonarqube_jenkins_data:
@@ -54,6 +67,7 @@ volumes:
   sonarqube_jenkins_temp:
   spring-jenkins-app-data: # Volume pour les données de l'application Spring Boot
   spring-jenkins-app-logs: # Volume pour les logs de l'application Spring Boot
+  pgdata:
 
 networks:
   jenkins-sonarqube-net:
